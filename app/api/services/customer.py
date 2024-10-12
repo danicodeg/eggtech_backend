@@ -21,7 +21,7 @@ def create_Customer(client: customer_schema.CustomerBase):
     return  {"message":"Saved", "status_code":200}
 
 
-def get_Customer(customer_id: customer_schema.CustomerBase):
+def get_one_customer(customer_id: customer_schema.CustomerBase):
     client = Customers.filter(Customers.id == customer_id).dicts().first()
 
     return client
