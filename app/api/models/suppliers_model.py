@@ -1,6 +1,6 @@
 import peewee
+from app.api.models.states_models import States
 from app.api.utils.db import db
-
 
 
 class Suppliers(peewee.Model):
@@ -12,9 +12,8 @@ class Suppliers(peewee.Model):
     address = peewee.CharField()
     phone = peewee.CharField()
     created_at = peewee.DateTimeField()
+    status_id = peewee.ForeignKeyField(States, backref='suppliers')
    
-
-
     class Meta:
         database = db       
         

@@ -28,6 +28,6 @@ def get_one_customer(customer_id: customer_schema.CustomerBase):
 
 def get_customers_all():
 
-    clients = [customer for customer in Customers.select().dicts()]
+    clients = [customer for customer in Customers.select().order_by(Customers.id.desc()).dicts()]
     return clients
 
