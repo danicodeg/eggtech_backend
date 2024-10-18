@@ -2,7 +2,6 @@ import peewee
 from app.api.utils.db import db
 from app.api.models.states_models import States
 
-
 class Customers(peewee.Model):
 
     id = peewee.IntegerField()

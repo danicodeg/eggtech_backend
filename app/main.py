@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+from app.api.routes.production_router import router as production_router
 from app.api.routes.suppliers_router import router as suppliers_router
 from app.api.routes.client_router import router as client_router
 from app.api.routes.user_router import router as user_router
@@ -19,3 +20,4 @@ app.add_middleware(
 app.include_router(client_router)
 app.include_router(user_router)
 app.include_router(suppliers_router)
+app.include_router(production_router)

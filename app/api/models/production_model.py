@@ -11,6 +11,7 @@ class Production(peewee.Model):
     shed = peewee.CharField()
     defective_eggs = peewee.IntegerField()
     cull_hens = peewee.IntegerField()
+    production_date = peewee.DateTimeField()
     created_at = peewee.DateTimeField()
     status_id = peewee.ForeignKeyField(States, backref='production')
   
