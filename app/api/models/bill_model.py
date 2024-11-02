@@ -12,9 +12,9 @@ class Bill(peewee.Model):
     bill_date = peewee.DateField()
     total = peewee.DecimalField()
     created_at = peewee.DateTimeField()
-    id_customers = peewee.ForeignKeyField(Customers, backref='bill', null=True )
+    customers_id = peewee.ForeignKeyField(Customers, backref='bill', null=True )
     status_id = peewee.ForeignKeyField(States, backref='bill', null=True)
-    id_bill_type = peewee.ForeignKeyField(BillType, backref='bill', null=True )
+    bill_type_id = peewee.ForeignKeyField(BillType, backref='bill', null=True )
 
 
 

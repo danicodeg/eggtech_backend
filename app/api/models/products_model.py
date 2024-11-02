@@ -14,8 +14,8 @@ class Products(peewee.Model):
     unit_cost = peewee.DecimalField()
     created_at = peewee.DateTimeField()
     status_id = peewee.ForeignKeyField(States, backref='products')
-    id_suppliers = peewee.ForeignKeyField(Suppliers, backref='products')
-    id_product_type = peewee.ForeignKeyField(ProductType, backref='products')
+    suppliers_id = peewee.ForeignKeyField(Suppliers, backref='products')
+    product_type_id = peewee.ForeignKeyField(ProductType, backref='products')
 
 
     class Meta:
