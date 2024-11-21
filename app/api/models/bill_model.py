@@ -15,6 +15,8 @@ class Bill(peewee.Model):
     customers_id = peewee.ForeignKeyField(Customers, backref='bill', null=True )
     status_id = peewee.ForeignKeyField(States, backref='bill', null=True)
     bill_type_id = peewee.ForeignKeyField(BillType, backref='bill', null=True )
+    observation = peewee.CharField()
+    description = peewee.CharField()
 
 
 

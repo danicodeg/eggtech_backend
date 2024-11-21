@@ -6,6 +6,7 @@ from app.api.routes.production_router import router as production_router
 from app.api.routes.suppliers_router import router as suppliers_router
 from app.api.routes.client_router import router as client_router
 from app.api.routes.user_router import router as user_router
+from app.api.routes.dashboard_router import router as dashboard_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -25,4 +26,5 @@ app.include_router(suppliers_router)
 app.include_router(production_router)
 app.include_router(products_router)
 app.include_router(bill_view_router)
+app.include_router(dashboard_router)
 

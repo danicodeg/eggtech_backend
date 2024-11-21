@@ -11,6 +11,8 @@ def create_Bill(bills: bill_schema.BillBase):
     bill=Bill(
         bill_date=bills.bill_date,
         total=bills.total,
+        observation= bills.observation,
+        description = bills.description,
         customers_id=bills.customers_id,
         bill_type_id=bills.bill_type_id,
         status_id =bills.status_id,

@@ -10,7 +10,7 @@ class Status(BaseModel):
     id_status: int
     description_status: str
 
-class ProductType(BaseModel):
+class Product_Type(BaseModel):
     id_product_type: int
     name: str
 

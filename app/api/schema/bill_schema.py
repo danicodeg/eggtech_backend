@@ -10,7 +10,7 @@ class Status(BaseModel):
     id_status: int
     description_status: str
 
-class ProductType(BaseModel):
+class Product_Type(BaseModel):
     id_product_type: int
     name: str
 
@@ -28,6 +28,8 @@ class BillBase(BaseModel):
 
     total: int
     bill_date: datetime
+    observation: str
+    description: str
     status_id: int
     customers_id: int
     bill_type_id: int
