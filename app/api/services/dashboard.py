@@ -1,5 +1,6 @@
 
 import datetime
+from app.api.models.production_model import Production
 from app.api.models.products_model import Products
 from app.api.models.product_type_model import Product_Type
 from peewee import fn
@@ -16,3 +17,17 @@ def get_products_type_all():
         .dicts()  # Convertir los resultados a diccionarios
     )
     return list(product_type)  # Devolver como lista de diccionarios
+
+def get_productions_type_all():
+    production_grafic = (
+        Production
+        .select(
+            fn.SUM(Production.defective_eggs).alias('total_defective_eggs'),
+            fn.SUM(Production.quantity).alias('total_quantity'),
+            fn.SUM(Production.cull_hens).alias('total_cull_hens'),
+            fn.DATE_FORMAT(Production.production_date, '%Y-%m').alias('month')  # Agrupación por mes
+        )
+        .where(Production.status_id == 1)
+        .group_by(fn.DATE_FORMAT(Production.production_date, '%Y-%m'))  # Agrupación
+    )
+    return list(production_grafic.dicts())
