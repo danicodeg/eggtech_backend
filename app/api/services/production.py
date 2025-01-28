@@ -8,12 +8,12 @@ from app.api.models.production_model import Production
 def create_production(productions: production_schema.ProductionBase):
 
     production=Production(
-       quantity=productions.quantity,
-       shed=productions.shed,
+        quantity=productions.quantity,
         defective_eggs=productions.defective_eggs,
         cull_hens=productions.cull_hens,
         production_date=productions.production_date,
         status_id =productions.status_id,
+        shed_id =productions.shed_id,
         created_at=datetime.datetime.now())
     production.save()
 
@@ -38,11 +38,11 @@ def update_Production(production_id: int, productions: production_schema.Product
 
     
     production.quantity = productions.quantity
-    production.shed = productions.shed
     production.defective_eggs = productions.defective_eggs
     production.cull_hens = productions.cull_hens
     production.date = productions.production_date
     production.status_id = productions.status_id
+    production.shed_id = productions.shed_id
     production.updated_at = datetime.datetime.now()
 
     production.save()  # Guardar cambios

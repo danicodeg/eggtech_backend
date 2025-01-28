@@ -16,6 +16,7 @@ router = APIRouter(prefix="/api")
      dependencies=[Depends(get_db)]
 )
 def create(productions: production_schema.ProductionBase = Body(...)):
+     print("post production:: ", production_schema)
      return create_production(productions)
 
 
