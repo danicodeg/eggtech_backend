@@ -1,56 +1,32 @@
-
+from passlib.context import CryptContext
 import datetime
-from app.api.schema import user_schema
 from app.api.models.user_model import User
+from app.api.schema.user_schema import UserCreate, UserResponse
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
 
-def create_User(user: user_schema.UserBase):
+def get_user_by_email(email: str):
+    return User.get_or_none(User.email == email)
 
-    user=User(
+def create_user(user: UserCreate):
+    hashed_password = pwd_context.hash(user.password)
+    user_db = User.create (
         name=user.name,
-        phone=user.phone,
         email=user.email,
-        password=user.password,
-        status_id =user.status_id,
-        created_at=datetime.datetime.now())
-    user.save()
+        password=hashed_password,
+        phone=user.phone,
+        created_at= datetime.datetime.now(),
+        status_id=user.status_id or 1
+    )
+    return user_db
 
-    return  {"message":"Saved", "status_code":200}
-
-
-
-def get_Users():
-
-    users = [us for us in User.select().dicts()]
-    return users
-
-def update_User(user_id: int, users: user_schema.UserBase):
- 
-    userss = User.get_or_none(User.id == user_id)
-    if not users:
-        return {"message": "User not found", "status_code": 404}
-
-    
-    userss.name = users.name
-    userss.phone = users.phone
-    userss.email = users.email
-    userss.password = users.password
-    userss.status_id = users.status_id
-    userss.updated_at = datetime.datetime.now()
-
-    userss.save()  # Guardar cambios
-
-    return {"message": "Updated", "status_code": 200}
-
-def delete_User(user_id: int):
-    
-    
-    userss = User.get_or_none(User.id == user_id)
-    if not userss:
-        return {"message": "Supplier not found", "status_code": 404}
-
-    
-    userss.delete_instance()
-
-    return {"message": "Deleted", "status_code": 200}
+def authenticate_user(email: str, password: str):
+    user = User.get_or_none(User.email == email)
+    if not user:
+        return False
+    if not verify_password(password, user.password):
+        return False
+    return user

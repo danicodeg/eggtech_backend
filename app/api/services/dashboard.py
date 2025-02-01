@@ -1,9 +1,14 @@
 
 import datetime
+from typing import List
 from app.api.models.production_model import Production
 from app.api.models.products_model import Products
 from app.api.models.product_type_model import Product_Type
 from peewee import fn
+from datetime import datetime, timedelta 
+from peewee import JOIN
+
+from app.api.models.shed_model import Shed
 
 
 def get_products_type_all():
@@ -31,3 +36,26 @@ def get_productions_type_all():
         .group_by(fn.DATE_FORMAT(Production.production_date, '%Y-%m'))  # Agrupación
     )
     return list(production_grafic.dicts())
+
+def get_total_hens(filter_type='today'):
+    today = datetime.now().date()
+    query = (
+        Shed
+        .select(
+            Shed.name_shed.alias('galpon'),
+            (Shed.total_hens - fn.IFNULL(fn.SUM(Production.cull_hens), 0)).alias('total_actual_gallinas')
+        )
+        .join(Production, JOIN.LEFT_OUTER, on=(Shed.id == Production.shed_id))
+    )
+
+    # Aplicar el filtro según el parámetro filter_type
+    if filter_type == 'today':
+        query = query.where(fn.DATE(Production.production_date) == today)
+    elif filter_type == 'this_week':
+        start_of_week = today - timedelta(days=today.weekday())
+        query = query.where(fn.DATE(Production.production_date) >= start_of_week)
+    elif filter_type == 'this_month':
+        query = query.where(fn.MONTH(Production.production_date) == today.month)
+
+    query = query.group_by(Shed.id).dicts()
+    return list(query)
