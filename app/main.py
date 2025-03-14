@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
-from app.api.routes.bill_view_router import router as bill_view_router
+
+from app.api.routes.bill_router import router as bill_router
 from app.api.routes.products_router import router as products_router
 from app.api.routes.production_router import router as production_router
 from app.api.routes.suppliers_router import router as suppliers_router
@@ -27,6 +28,6 @@ app.include_router(user_router)
 app.include_router(suppliers_router)
 app.include_router(production_router)
 app.include_router(products_router)
-app.include_router(bill_view_router)
+app.include_router(bill_router)
 app.include_router(dashboard_router)
 app.include_router(shed_router)
